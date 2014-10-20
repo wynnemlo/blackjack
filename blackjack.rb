@@ -46,11 +46,20 @@ def new_deck
   deck
 end
 
+# Checks if ace is present in a given hand.
+def ace_present?(hand)
+  hand.values.flatten.include?(1)
+end
+
 # Calculates and returns the total value of a hand.
+# Handles the ace according to computer's expected behavior - 
+# i.e. Counts ace as 11 when the total is less than 17.
 def total_value(hand)
-  # If Ace is present
-  if hand.values.flatten.include?(1)
-    total = 0
+  if ace_present?(hand)
+    pick out the aces
+      if there is only 1 ace
+        check if other cards' value 
+    if 
   else
     total = 0
     hand.values.flatten.each { |val| total = total + val }
