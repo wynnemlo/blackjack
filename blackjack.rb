@@ -46,35 +46,61 @@ def new_deck
   deck
 end
 
-# Checks if ace is present in a given hand.
-def ace_present?(hand)
-  hand.values.flatten.include?(1)
+# Returns a flattened array which contains only the numeric values of a hand.
+def values(hand)
+  hand.values.flatten
+end
+
+# Checks how many aces there are in a given hand.
+def num_of_aces(hand)
+  values(hand).count(1)
+end
+
+# Takes a flattened hand and returns the sum of numeric values.
+def sum_of_array(flattened_hand)
+  total = 0
+  flattened_hand.each { |val| total = total + val }
+  total
 end
 
 # Calculates and returns the total value of a hand.
 # Handles the ace according to computer's expected behavior - 
 # i.e. Counts ace as 11 when the total is less than 17.
 def total_value(hand)
-  if ace_present?(hand)
-    pick out the aces
-      if there is only 1 ace
-        check if other cards' value 
-    if 
+  total = 0
+  binding.pry
+  # If only 1 ace is present.
+  if num_of_aces(hand) == 1
+    # If the rest of the cards (excluding the ace) adds up to less than or equal to 10
+    if (sum_of_array(values(hand)) - 1) <= 10
+      binding.pry
+      # Count ace as 11.
+      total = sum_of_array(values(hand)) + 11 - 1
+    else
+      binding.pry
+      # Else, count ace as 1.
+      total = sum_of_array(values(hand))
+    end
+  # If more than 1 ace is present.
+  elsif num_of_aces(hand) > 1
+    num_of_aces = num_of_aces(hand)
+    aces_removed_arr = values(hand).delete(1)
+    total = sum_of_array(aces_removed_arr) + 11 + (num_of_aces - 1)
+  # If there are no aces.
   else
-    total = 0
-    hand.values.flatten.each { |val| total = total + val }
+    total = sum_of_array(values(hand))
   end
+  binding.pry
   total
 end
 
-# Returns true if a hand has a blackjack.
-def is_blackjack?(hand)
-end
-
-
 # Instantiate new deck.
 new_deck
-player_hand1 = { club: [1], spade: [10] }
+
+# Deal player and computer both 2 cards.
+
+player_hand1 = { club: [2, 1], spade: [10]}
 player_hand2 = { club: [1], spade: [5] }
-player_hand3 = { club: [2], spade: [3] }
+player_hand3 = { club: [2], spade: [3], spade: [1]}
+player_hand4 = { club: [2], spade: [3], spade: [5]}
 binding.pry
